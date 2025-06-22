@@ -18,8 +18,12 @@ This is everything I learned while there (alphabetically):
 - **Cloud**
 - **Containerization**
     - [Docker](Containerization/docker.md)
-- **Version Control**
+- **Git**
     - [Git](git.md)
+        - [Basics](Git/git-basics.md)
+        - [Branches](Git/git-branches.md)
+        - [Commands](Git/git-commands.md)
+        - [Concepts](git-areas.md)
     - [GitHub](github.md)
     - [GitLab](gitlab.md)
 - **Linux**

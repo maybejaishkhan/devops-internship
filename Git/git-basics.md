@@ -224,8 +224,3 @@ git rev-parse --is-inside-work-tree
 | `git init --bare`    | Server-style repo, no working directory |
 | Undo                 | `rm -rf .git`                           |
 
----
-
-## 🚀 **Ready for #2?**
-
-If you want, I’ll break down `git add` next in the same level of detail — just say **“Next: git add!”** 🚀✨
