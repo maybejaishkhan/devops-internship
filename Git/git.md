@@ -42,18 +42,27 @@ In a Git repository, run `tree -a .git`  (or use `ls -a .git` if no tree). You�
 ├── refs/               # Contains refs: branches, tags
 ```
 ## Project Areas
-A Git project has **3 main areas** (plus 1 more when working with others). Understanding these helps you know **where your files are at each step**.
-1. **Working Directory (Working Tree)** --> This is your **actual** project folder on your computer. You create, edit, delete files here like normal. By default, Git does not track new files until you tell it to.
-2. **Staging Area (Index)** --> This is a **holding area** for changes you want to include in the next commit. It lets you build a **perfect commit**, exactly what you want to save.
-3. **Local Repository (History)** --> This is the **hidden `.git` folder**. When you make a commit, Git takes a snapshot of what's in the Staging Area and saves it forever. You can go back in time, see who changed what, undo mistakes (all locally).
-4. **Remote Repository (Shared Repo)** --> This is the **copy of your repo on a server**, like GitHub, GitLab, or Bitbucket. Used for sharing and collaboration.
+A Git project has **3 main areas** (plus 1 more when working with others). Understanding these helps you know where your files are at each step.
+1. **Working Directory (Working Tree)** --> This is your actual project folder on your computer. You create, edit, delete files here like normal. By default, Git does not track new files until you tell it to.
+2. **Staging Area (Index)** --> This is a holding area for changes you want to include in the next commit. It lets you build a perfect commit, exactly what you want to save.
+3. **Local Repository (History)** --> This is the hidden `.git` folder. When you make a commit, Git takes a snapshot of what's in the Staging Area and saves it forever. You can go back in time, see who changed what, undo mistakes (all locally).
+4. **Remote Repository (Shared Repo)** --> This is the copy of your repo on a server, like GitHub, GitLab, or Bitbucket. Used for sharing and collaboration.
 
-| Command |  | Opposite |
-| --- | --- | --- |
-| `git init` | Initialize. | `rm -rf .git` |
-| `git add .`<br/>`git add <file>` | **Working Directory** <—> **Staging Area** | `git restore --staged .` or `git reset` <br /> `git restore --staged <file>` or `git reset <file>` |
-| `git commit -m "<message>"` | **Staging Area** <—> **Local Repository** | `git revert` <br />`git reset --mixed HEAD~1` <br />`git reset --soft HEAD~1`<br /> `git reset --hard HEAD~1` <br /> `git commit --amend` |
-| `git push` | **Local Repository** <—> **Remote Repository** | `git fetch`<br />`git pull` |
+| Command | Opposite |
+| --- | --- |
+| `git init` | `rm -rf .git` |
+| `git add .`<br/>`git add <file>`<br/>**Working Directory** to **Staging Area** | `git restore --staged .` <br /> `git restore --staged <file>` <br /> or <br /> `git reset`<br />`git reset <file>` |
+| `git commit -m "<message>"`<br />**Staging Area** to **Local Repository** | `git revert` <br />`git reset --mixed HEAD~1` <br />`git reset --soft HEAD~1`<br /> `git reset --hard HEAD~1` <br /> `git commit --amend` |
+| `git push`<br />**Local Repository** to **Remote Repository** | `git fetch`<br />`git pull` |
+
+- `git restore --staged` is a much safer alternative to `git reset`.
+- `git revert` makes a new commit that undoes whatever the last commit did.
+- `git reset` takes the HEAD and moves it back to change commit history. The 3 parameters decide what happens to the changes:
+	- `--mixed` (unstaged).
+	- `--soft` (staged).
+	- `--hard` (erased).
+- `git commit --amend` is for changing the last commit.
+- `git pull` is a combination of `git fetch` and `git merge`.
 
 ## Branches
 > Branches let you work on multiple "versions" of your project at the same time. A branch is basically a lightweight movable pointer to a commit.
@@ -69,7 +78,7 @@ A Git project has **3 main areas** (plus 1 more when working with others). Under
 7. Delete (Remote): `git push origin --delete <branch>`
 8. Rename: `git branch -m <old> <new>`
 
-## **Merging and Rebasing**
+### Merging and Rebasing
 Suppose you have 2 branches: **main** and **feature**.
 * The **main** branch starts with commits `{A, B}`.
 * You create the **feature** branch at commit `B`.
@@ -119,6 +128,14 @@ We can see that **Merge Commits** keep the commit histories intact BUT are messy
 * Use **merge** for teamwork.
 * Use **rebase** for cleaning up before merging or for local branches.
 
+To get these changes onto the remote repository, `git push` wouldn't work as it doesn't overwrite branches. So, we use `git push --force-with-lease`.
+- NEVER use `git push --force` as it'd destroy changes made by others on the remote repo.
+
+#### Merge Conflicts
+There are merge conflicts when git can't automerge branches together. To fix that, do `git status` and go to each file individually to fix the conflicts. Git marks them with <<<<<<<<<===========>>>>>>>>>.
+
+Once done, do `git commit` (Merge) or `git rebase --continue` (Rebase) to carry on.
+
 ## Stash and Worktree
 
 > Stash is a git feature to temporarily save (stash) your local changes without committing them, so you can: switch branches, pull latest changes or fix something urgent  — **without losing your work-in-progress**.
@@ -145,11 +162,24 @@ Internally, Worktrees shares the same .git folder, saving disk space.
 2. Create: `git worktree add <path> <branch>`
 3. Delete: `git worktree remove <path>`
 4. Cleanup: `git worktree prune`
-
-- Create branch from worktree: `git worktree add <path> -b <branch>`
+5. Create branch from worktree: `git worktree add <path> -b <branch>`
 
 ## Inspection
+`git status` is the main command for inspection. It shows staged, untracked, modified etc.
+- `git diff` to see unstaged changes.
+- `git diff --staged` to see staged changes.
 
+To check the commit history we can do `git log`.
+- Add `--online` for one-liner overviews for each commit.
+- Add `--graph` to see ASCII commit history graph.
+- Add `--all` to see all branches.
 
+To see
+- What changes a commit did `git show <commit>`
+- What changes affected a file `git log <file>`
+- Who last modified each line of a file `git blame <file>`. Add `-L 10,20` to only blame lines 10-20.
 
-## Other Concepts
+`git reflog` shows all the HEAD movements (commit/rebase/checkout).
+
+We can inspect "remotes" with their URLs by doing `git remote -v` (for detailed `git remote show <remote>`). 
+

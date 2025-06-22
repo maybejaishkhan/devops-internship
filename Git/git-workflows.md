@@ -57,3 +57,9 @@ git stash                               # Save uncommitted changes
 git pull                                # Update branch safely
 git stash pop                           # Reapply stashed changes
 ```
+
+9. Replace Local branch with Remote branch.
+```shell
+git fetch
+git reset --hard @{u}
+```
