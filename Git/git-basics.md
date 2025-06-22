@@ -1,14 +1,17 @@
-## 2. Git Project
-To start a git project we do `git init`. This creates a `.git` folder in the current folder. 
-
-> This project is a local git project but we can also clone anyone else's existing repo from a remote provider like [Github]() or [Gitlab]() using the `git clone <url>` command.
-### 2.1. Project Areas
+## 1. Start a Git Project
+There are 2 ways of starting a Git project:
+1. *Local-first* --> **`git init`** creates a new **empty Git repository** in your current directory. This turns an ordinary folder into a **Git version-controlled project** (with a `.git` folder).
+2. *Remote-first* --> Create a remote repository (GitHub/GitLab) and copy its URL or copy someone else's remote repo URL, then `git clone <url>` to get it locally.
+## 2. Project Areas
 Every git project has 3 (and also a 4th) areas and it works by managing things between these areas:
-1. **Working Directory** --> Where our files/folders live in a git project. Completely untracked.
-2. **Staging Area** --> Where the files we select to be committed live.
-3. **Local Repository** --> Where all the commits are stores.
-
-**Remote Repository** --> Basically a repository that is somewhere else.
+### 2.1. **Working Directory**
+Where our files/folders live in a git project. Completely untracked.
+### 2.2. **Staging Area**
+Where the files we select to be committed live.
+### 2.3. **Local Repository**
+Where all the commits are stores.
+### 2.4 **Remote Repository**
+Basically a repository that is somewhere else.
 
 Creating a git project and getting it to GitHub looks like this:
 ```shell
@@ -35,9 +38,6 @@ git push -u origin main
 
 ## ✅ **📌 1️⃣ What is `git init`?**
 
-**`git init`** creates a new **empty Git repository** in your current directory.
-
-This turns an ordinary folder into a **Git version-controlled project**.
 
 ---
 
