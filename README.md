@@ -19,9 +19,9 @@ This is everything I learned while there (alphabetically):
 - **Containerization**
     - [Docker](Containerization/docker.md)
 - **Version Control**
-    - [Git](Version%20Control/git.md)
-    - [GitHub](Version%20Control/github.md)
-    - [GitLab](Version%20Control/gitlab.md)
+    - [Git](git.md)
+    - [GitHub](github.md)
+    - [GitLab](gitlab.md)
 - **Linux**
     - [Cronjobs](Linux/linux-cronjobs.md)
     - [Networking](Linux/linux-networking.md)
