@@ -1,10 +1,22 @@
 # Git - Version Control System
-> The default VCS that is being used by 99% of the world.
+Basically the default VCS that is being used by 90% of the world. It is a terminal application that makes it possible to contribute and share code.
 
-It is a terminal application that makes it possible to contribute and share code.
+1. [Setup](#setup)
+2. [Start a Git Repository](#start-a-git-repository)
+	1. [Folder Anatomy of .git](#folder-anatomy-of-git)
+3. [Project Areas](#project-areas)
+4. [Branches](#branches)
+	1. [Merging and Rebasing](#merging-and-rebasing)
+	2. [Merge Conflicts](#merge-conflicts)
+	3. [Stash and Worktree](#stash-and-worktree)
+5. [Inspection](#inspection)
+6. [Submodules](#submodules)
+
+---
+                                               
 ## Setup
 
-1. **Windows** --> Get the installer from [https://git-scm.com/downloads]. Don't install via package manager (winget/choco/scoop) as you'd have to manually configure it.
+1. **Windows** --> Get the installer from [https://git-scm.com/downloads]. Don't install via package manager (winget/choco/scoop) as you'd have to manually configure it.    
 2. **Linux** --> Use the package manager.
 	1. Ubuntu/Debian: `sudo apt install git`
 	2. Fedora/CentOS: `sudo dnf install git`
@@ -131,12 +143,12 @@ We can see that **Merge Commits** keep the commit histories intact BUT are messy
 To get these changes onto the remote repository, `git push` wouldn't work as it doesn't overwrite branches. So, we use `git push --force-with-lease`.
 - NEVER use `git push --force` as it'd destroy changes made by others on the remote repo.
 
-#### Merge Conflicts
+### Merge Conflicts
 There are merge conflicts when git can't automerge branches together. To fix that, do `git status` and go to each file individually to fix the conflicts. Git marks them with <<<<<<<<<===========>>>>>>>>>.
 
 Once done, do `git commit` (Merge) or `git rebase --continue` (Rebase) to carry on.
 
-## Stash and Worktree
+### Stash and Worktree
 
 > Stash is a git feature to temporarily save (stash) your local changes without committing them, so you can: switch branches, pull latest changes or fix something urgent  — **without losing your work-in-progress**.
 
@@ -183,3 +195,4 @@ To see
 
 We can inspect "remotes" with their URLs by doing `git remote -v` (for detailed `git remote show <remote>`). 
 
+## Submodules
