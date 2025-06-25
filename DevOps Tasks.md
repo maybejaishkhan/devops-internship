@@ -320,14 +320,6 @@ RUN docker-php-ext-enable pdo
 
 ```bash
 docker run -d \
-  --name nginx-maria \
-  --network nginx-network \
-  -p 80:80 \
-  -v $(pwd)/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro \
-  -v $(pwd)/src:/var/www/html:ro \
-  nginx:latest
-
-docker run -d \
   --name mariadb \
   --network nginx-network \
   -p 3306:3306 \
@@ -343,6 +335,14 @@ docker run -d \
   --network nginx-network \
   -v $(pwd)/src:/var/www/html \
   php-fpm-pdo
+
+docker run -d \
+  --name nginx-maria \
+  --network nginx-network \
+  -p 80:80 \
+  -v $(pwd)/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro \
+  -v $(pwd)/src:/var/www/html:ro \
+  nginx:latest
 ```
 
 ---
