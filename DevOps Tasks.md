@@ -551,3 +551,11 @@ ubuntu-2 ansible_host=127.0.0.1 ansible_port=2223 ansible_user=ansibleuser ansib
     - `echo "ansibleuser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers`
 
 10. **Run the playbook** --> `ansible-playbook -i inventory.ini configure_ubuntu.yaml`
+
+# Task - Jun 26
+
+- Create 5 Ubuntu containers. 
+- Create a shell script that SSHs into all of them and gets their system information into a log file
+- A cronjob runs every hour that emails it to abdullah.kaleem@jumppace.com.
+
+1. 
