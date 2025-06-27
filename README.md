@@ -1,3 +1,6 @@
+
+# DevOps
+
 > **DevOps Internship**  
 > Instructor: *Abdullah Kaleem*  
 > Organization: *Jumppace*  
@@ -5,11 +8,10 @@
 > Location: *Karachi, Pakistan*  
 > Date: *17 June - 17 July 2025*
 
-# DevOps 
-
 It is a culture/process whose main goal is to develop, release and maintain software with maximum quality and speed, via automation tools.
 
 There are 2 groups of software engineers:
+
 1. **Development (Dev group)** --> planning, coding, building and testing.
     - Business and System Analyst
     - Software Architects
@@ -29,17 +31,23 @@ There are 2 groups of software engineers:
 
 ## DevOps Practices
 
-1. [Version Control](version-control.md)
-2. [CI/CD Automation](ci-cd-automation.md)
-3. [Containerization](containerization.md)
-    - [Container Orchestration](containerization#container-orchestration.md)
-4. [Infrastructure as Code](infrastructure-as-code.md)
-    - [Infrastructure Provisioning]()
-    - [Configuration Management]()
-5. [Cloud Computing](cloud-computing.md)
-6. [Monitoring and Logging (Observability)](observability.md)
-7. [SRE (Site Reliability Engineering)](site-reliability-engineering.md)
-8. [Security (DevSecOps)](devsecops.md)
-9. [Machine Learning (MLOps)](mlops.md)
-10. [Chaos Engineering](chaos-engineering.md)
-11. [Finance (FinOps)](finops.md)
+1. [Version Control](docs/version-control.md)
+2. [CI/CD Automation](docs/ci-cd.md)
+3. [Containerization](docs/containerization.md)
+    - [Container Orchestration](docs/containerization#container-orchestration.md)
+4. [Infrastructure as Code](docs/infrastructure-as-code.md)
+    - [Infrastructure Provisioning](docs/infrastructure-as-code#infrastructure-provisioning.md)
+    - [Configuration Management](docs/infrastructure-as-code#configuration-management.md)
+5. [Cloud Computing](docs/cloud-computing.md)
+6. [Monitoring and Logging (Observability)](docs/observability.md)
+7. [Site Reliability Engineering](docs/site-reliability-engineering.md)
+8. [DevSecOps](docs/devsecops.md)
+9. [MLOps](docs/mlops.md)
+10. [FinOps](docs/finops.md)
+
+## Other Essentials
+
+1. [Linux](docs/linux.md)
+2. [Networking](docs/networking.md)
+3. [Web Development](docs/web-development.md)
+4. [Databases](docs/databases.md)

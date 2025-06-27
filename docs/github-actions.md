@@ -1,105 +1,335 @@
 # GitHub Actions
-The built-in CI/CD tool for [GitHub](../Git/vcs-hosting.md#github) repositories. [Documentation](https://docs.github.com/en/actions)
 
-It is configured using the `.github/workflows/<name>.yml` file. GitHub Actions provides a lot of pre-written workflows (CI, CD, Automation, Pages etc).
+The built-in CI/CD and automation tool for [GitHub](./version-control#github.md) repositories. They are configured using YAML files stored as `.github/workflows/<name>.yml`. GitHub does provide pre-written workflows for use cases like CI, CD, automation, GitHub Pages, etc.
 
-1. **Workflow** --> A configurable automated process that will run one or more jobs. 
-    - Workflows are defined by a YAML file and will run when triggered by an event in your repository, or they can be triggered manually, or at a defined schedule. 
-    - A repository can have multiple workflows and can reference a workflow within another workflow.
-2. **Event** --> A specific activity in a repository that triggers a workflow run. 
-    - An activity can originate from GitHub when someone creates a pull request, opens an issue, or pushes a commit to a repository. 
-    - We can also trigger a workflow to run on a schedule, by posting to a REST API, or manually.
-3. **Job** --> A set of steps in a workflow that is executed on the same runner. 
-    - Each step is either a shell script that will be executed, or an action that will be run. 
-    - Steps are executed in order and are dependent on each other. Since each step is executed on the same runner, you can share data from one step to another.
-3. **Action** --> A custom application for the GitHub Actions platform that performs a complex but frequently repeated task. 
-    - Use an action to help reduce the amount of repetitive code that you write in your workflow files. An action can pull your Git repository from GitHub, set up the correct toolchain for your build environment, or set up the authentication to your cloud provider.
-4. **Runner** --> A server that runs your workflows when they're triggered. 
-    - Each runner can run a single job at a time. GitHub provides Ubuntu Linux, Microsoft Windows, and macOS runners to run your workflows. Each workflow run executes in a fresh, newly-provisioned virtual machine.
+> [GitHub Actions Documentation](https://docs.github.com/en/actions)  
+> [GitHub Actions Marketplace](https://github.com/marketplace?type=actions)  
+> [Starter Workflows](https://github.com/actions/starter-workflows)
 
+A typical GitHub Actions YAML file looks like:
 
 ```yaml
 # .github/workflows/deploy.yaml
 
-name: Workflow Name  # Optional
+name: Workflow Name  # Optional workflow name
 
-on:                  # Event(s) that trigger this workflow
+on:                  # Events that trigger the workflow
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
-    branches:
-      - main
+    branches: [main]
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '0 0 * * *'  # Daily at midnight
+  workflow_dispatch:      # Manual trigger via UI
 
-permissions:
-    contents: write
-    pull_requests: write
+permissions:         # GITHUB_TOKEN access control (least privilege)
+  contents: write
+  pull_requests: write
 
-jobs:                # One or more jobs
-  job_id:            # Unique ID for this job
-    name: Job Name   # Optional
-    runs-on: ubuntu-latest  # OS or runner label
-    needs: other_job_id     # Optional: run after another job
-    if: ${{ condition }}    # Optional: conditional execution
-
-    environment: production # Optional: sets environment
-
-    env:            # Optional: set environment variables for this job
+jobs:
+  job_id:
+    name: Job Name
+    runs-on: ubuntu-latest
+    needs: other_job_id        # Optional dependency
+    if: ${{ condition }}       # Optional conditional execution
+    environment: production    # Optional environment
+    env:                       # Job-level environment variables
       NODE_ENV: production
-
-    defaults:       # Optional: default values for steps
+    defaults:                  # Job-level defaults
       run:
         shell: bash
+    steps:                     # Steps run in order on the same runner
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-    steps:          # Steps run sequentially within a job
-      - name: Step name
-        uses: actions/checkout@v4   # Reuse an existing action
-      - name: Run a command
+      - name: Run a shell command
         run: echo "Hello World"
-      - name: Use an action with inputs
+
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Set environment variable
-        run: echo "MY_VAR=123" >> $GITHUB_ENV
 
+      - name: Set env variable
+        run: echo "MY_VAR=123" >> $GITHUB_ENV
 ```
 
-## Workflow Keywords
+## Table of Contents
 
-1. `name` - The name of the workflow. GitHub displays the names of your workflows under your repository's "Actions" tab.
-2. `env` - A map of variables that are available to the steps of all jobs in the workflow. You can also set variables that are only available to the steps of a single job or to a single step (`job.<id>.env`).
-3. `defaults` - Use defaults to create a map of default settings that will apply to all jobs in the workflow. You can also set default settings that are only available to a job (`job.<id>.defaults`). It has 2 keywords: `shell` and `working_directory`.
+## Terminologies
 
-### `On` Triggers
+Every GitHub Actions workflow involves **6 core components**:
 
+| Component    | Description  |
+| --- | --- |
+| **Workflow** | A YAML-defined automated process triggered by events like pushes, pull requests, or schedules. A repo can have multiple workflows. |
+| **Event**    | A specific activity that triggers the workflow to run. Events can also be scheduled or manual. Defined via `on:`        |
+| **Job**      | A sequence of steps executed on the same runner. Jobs are independent and defined using `jobs:` unless defined with `needs:`                   |
+| **Steps** | A single action or script inside a job. They are executed sequentially on the same runner. Defined via `run:` (command) or `uses:` (reusable action). |
+| **Runner**   | A server (VM) provided by GitHub or self-hosted that executes the job. Each job runs in a fresh VM.  Defined via `runs-on:` inside of a job.        |
+| **Action**   | A reusable script or tool to perform common tasks (e.g., checkout repo, set up Node.js). Defined via `uses:` inside a job's steps.         |
+
+## Events
+
+Defined with the `on` keyword. These are triggered when:
+
+- `push` - commits are pushed.
+- `pull_request` - pull request is opened, synchronized, or reopened.
+- `workflow_dispatch` - allows manual execution from the GitHub UI.
+- `schedule` - scheduled times (cron syntax, UTC).
+- `create`, `delete` - branches/tags are created or deleted.
+- `issues`, `issue_comment` - an issue is created or comment is made.
+- `release` - releases events.
+- `registry_package` - packages events.
+- `deployment`, `deployment_status` - a deployment is created or its status is updated.
+- `check_run`, `check_suite` - CI checks start or complete.
+- `status` - a commit status is updated (like from another CI service).
 
 ```yaml
 on:
   push:
     branches: [main, dev]
+    paths:
+      - 'src/**'
+      - '!docs/**'         # exclude changes in docs
   pull_request:
+    branches: [main]
+    types: [opened, synchronize]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Target Environment'
+        required: true
+        default: 'staging'
   schedule:
-    - cron: '0 0 * * 0'   # weekly on Sunday
-  workflow_dispatch:      # manual trigger
+    - cron: '0 0 * * 0'   # every Sunday at 00:00 UTC
+  issues:
+    types: [opened, closed]
+  issue_comment:
+    types: [created]
+  release:
+    types: [published]
+  create:
+    tags:
+      - v*
+  delete:
+    branches:
+      - feature/*
+  registry_package:
+    types: [published]
+  deployment:
+  deployment_status:
+  check_suite:
+    types: [completed]
+  status:
 ```
 
-### Permissions
-It controls what access the `GITHUB_TOKEN` has. We can define it globally or  just inside a job. It uses **least privilege** so any permission you don't specify defaults to `none`. Hence, there are 3 access levels: `none`, `read` or `write` (both read & write).
-- actions — manage workflows
-- attestations — create artifact attestations
-- checks — create/check check runs and suites
-- contents — read/write repository files and releases
-- deployments — create/manage deployments
-- discussions — read/write GitHub Discussions
-- id-token — request OIDC token for secure auth
-- issues — read/write issues and comments
-- models — use GitHub AI Models API
-- packages — upload/publish GitHub Packages
-- pages — request GitHub Pages builds
-- pull-requests — read/write pull requests
-- security-events — handle code scanning and Dependabot alerts
-- statuses — read/write commit statuses
+## Permissions
 
+Defined with the `permissions:` keyword.
+
+GitHub Actions follows **least privilege** by default: all permissions are set to `none` unless explicitly granted.
+You can define permissions at the **workflow level** or per **job**.
+
+| Scope                   | Access                                   |
+| ----------------------- | ---------------------------------------- |
+| `none`, `read`, `write` | Define access level for each scope below |
+
+Permissions are defined for a scope:
+
+- `actions` — Manage workflows
+- `attestations` — Create artifact attestations
+- `checks` — Create/check CI checks
+- `contents` — Read/write files/releases
+- `deployments` — Manage deployments
+- `discussions` — Read/write discussions
+- `id-token` — For OIDC-based authentication
+- `issues` — Read/write issue comments
+- `models` — Use GitHub Copilot models
+- `packages` — Manage GitHub Packages
+- `pages` — GitHub Pages build
+- `pull-requests` — PR comments and metadata
+- `security-events` — Handle scanning results
+- `statuses` — Commit status updates
+
+## Expressions
+
+GitHub Actions has something called **Reference Expressions**. They are defined like `${{ }}`. Inside them we can use **Context Variables** (using a **Context**).
+
+```yml
+# Use a secret
+env:
+  API_KEY: ${{ secrets.MY_SECRET }}
+
+# Use matrix value
+runs-on: ${{ matrix.os }}
+
+# Conditional step
+if: ${{ github.ref == 'refs/heads/main' }}
+
+# Use output from a previous step
+- name: Get result
+  run: echo "Value: ${{ steps.fetch.outputs.result }}"
+
+```
+
+### Contexts and Context Variables
+
+Using the `github` context, we can get info about:
+
+- Repository `github.repository`, `github.repository_owner`
+- Branches `github.ref`, `github.ref_name`, `github.ref_type`
+- URL `github.server_url`, `github.api_url`, `github.graphql_url`
+- Workflow itself `github.workflow`, `github.run_id`, `github.run_number`, `github.job`
+- One who triggered the workflow `github.sha`, `github.actor`
+- Event `github.event_name`, `github.event.head_commit.message`, `github.event.pull_request.title`, `github.event.issue.body`
+- Source/Target branch `github.event.pull_request.head.ref`, `github.event.pull_request.base.ref`
+- Branch protection `github.ref_protected`
+
+We can get different types of variables via different contexts:
+
+- Custom environment variables `env.<envvar_name>` — Defined at workflow, job, or step level
+- Encrypted Secrets `secrets.<secret_name>` — Secret values (like API tokens)
+- User-defined variables (defined in GitHub UI) with `vars.<variable_name>` — Custom version string or any other setting
+
+Information about the
+
+- Current job `job.status`
+- All or specific job `jobs.<job_name>.result`, `jobs.<job_name>.outputs.artifact_url`
+- Outputs/results of dependent jobs `needs.<job_name>.result`, `needs.<job_name>.outputs.artifact_url`
+- Steps of current job `steps.<step_id>.outputs.output_name`, `steps.<step_id>.conclusion`, `steps.<step_id>.outcome`
+
+We can also get info about the runner `runner`, group of them `matrix` or th strategy for them `strategy`.
+
+- `runner.os`, `runner.arch`, `runner.name`, `runner.temp`
+- `matrix.os`, `matrix.node`, `matrix.python`
+- `strategy.fail-fast` — Whether to cancel all on one failure
+- `strategy.max-parallel` — Max parallel jobs
+- `strategy.matrix.os` — OS list
+
+Lastly there is the `inputs` context for user provided inputs (via `workflow_dispatch`)
+
+- `inputs.environment` — Environment input value
+- `inputs.version` — Version input value
+
+### Expression Functions
+
+Used inside the `if` keyword.
+
+| **Function**           | **Description**                                             | **Example**                                       |
+| ---------------------- | ----------------------------------------------------------- | ------------------------------------------------- |
+| `startsWith(a, b)`     | Returns true if string `a` starts with string `b`           | `${{ startsWith(github.ref, 'refs/tags/') }}`     |
+| `endsWith(a, b)`       | Returns true if string `a` ends with string `b`             | `${{ endsWith(matrix.node, '18') }}`              |
+| `contains(a, b)`       | Returns true if string `a` contains string `b`              | `${{ contains(github.actor, 'bot') }}`            |
+| `format(fmt, args...)` | Returns a formatted string using placeholders like `{0}`    | `${{ format('release-{0}', github.run_number) }}` |
+| `join(list, sep)`      | Joins items in a list using a separator                     | `${{ join(matrix.node, ', ') }}`                  |
+| `toJSON(value)`        | Converts a value into its JSON string representation        | `${{ toJSON(matrix) }}`                           |
+| `fromJSON(string)`     | Parses a JSON string back into an object or list            | `${{ fromJSON('["ubuntu", "windows"]')[0] }}`     |
+| `hashFiles(globs...)`  | Returns a hash string of the contents of the matching files | `${{ hashFiles('**/package-lock.json') }}`        |
+| `success()`            | Returns true if previous step/job succeeded                 | `${{ success() }}`                                |
+| `failure()`            | Returns true if previous step/job failed                    | `${{ failure() }}`                                |
+| `always()`             | Always returns true (even if prior steps fail)              | `${{ always() }}`                                 |
+| `cancelled()`          | Returns true if job/run was cancelled                       | `${{ cancelled() }}`                              |
+
+## Secrets and Environments
+
+> Secrets store sensitive information like API keys, tokens, passwords) securely in encrypted form. They can be at different levels:
+
+- Repository-level: Settings → Secrets and variables → Actions → Secrets
+- Organization-level: Share across multiple repositories
+- Environment-level: Scoped per environment
+
+> Environments are named stages in your deployment process like dev, staging or production. They support environment-specific secrets, protection rules and custom environment URLs.
+
+```yml
+jobs:
+  deploy:
+    environment:
+      name: production
+      url: https://example.com
+```
+
+## Advanced Processes
+
+### Matrix Strategy
+
+Running jobs across multiple versions/configs in parallel. Useful for testing against multiple OSes, languages etc.
+
+```yml
+strategy:
+  matrix:
+    os: [ubuntu-latest, windows-latest]
+    node: [16, 18]
+
+runs-on: ${{ matrix.os }}
+
+steps:
+  - uses: actions/setup-node@v4
+    with:
+      node-version: ${{ matrix.node }}
+```
+
+### Reusable Workflows
+
+Common workflow logic can be made into "modules" and called from other workflows.
+
+```yml
+jobs:
+  call-common:
+    uses: my-org/my-repo/.github/workflows/common.yml@main
+    with:
+      param1: "value"
+    secrets:
+      token: ${{ secrets.MY_SECRET }}
+```
+
+### Conditional Execution
+
+Defined via the `if` keyword. Control whether a step or job should run.
+
+```yml
+# Run only on main branch
+if: github.ref == 'refs/heads/main'
+
+# Run only on PRs
+if: github.event_name == 'pull_request'
+
+# Run only when previous step fails
+if: failure()
+
+# Run if file changed
+if: contains(github.event.head_commit.message, 'docs')
+```
+
+### Caching
+
+Speeding up workflows by saving dependencies or build outputs between runs.
+
+```yml
+- uses: actions/cache@v4
+  with:
+    path: ~/.npm
+    key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+    restore-keys: |
+      ${{ runner.os }}-node-
+```
+
+### Artifacts
+
+Artifacts let you upload and persist files from a job for later use or inspection.
+
+```yml
+Upload
+
+- uses: actions/upload-artifact@v4
+  with:
+    name: build-output
+    path: dist/
+
+Download
+
+- uses: actions/download-artifact@v4
+  with:
+    name: build-output
+    path: ./dist
+```

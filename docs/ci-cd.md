@@ -1,7 +1,7 @@
-# Continuous Integration / Continuous Deployment
+# CI/CD
 
-## CI-CD Automation Tools
+Continuous Integration / Continuous Deployment
 
-- [GitHub Actions](/CI-CD/github-actions.md)
-- [GitLab CI](/CI-CD/gitlab-ci.md)
-- [Jenkins](/CI-CD/jenkins.md)
+1. [GitHub Actions](./github-actions.md)
+2. [GitLab CI](./gitlab-ci.md)
+3. [Jenkins](./jenkins.md)
