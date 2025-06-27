@@ -54,7 +54,22 @@ jobs:
         run: echo "MY_VAR=123" >> $GITHUB_ENV
 ```
 
-## Table of Contents
+**Table of Contents**:
+
+- [Terminologies](#terminologies)
+- [Events](#events)
+- [Permissions](#permissions)
+- [Expressions](#expressions)
+	- [Contexts and Context Variables](#contexts-and-context-variables)
+	- [Expression Functions](#expression-functions)
+- [Secrets and Environments](#secrets-and-environments)
+- [Advanced Processes](#advanced-processes)
+	- [Matrix Strategy](#matrix-strategy)
+	- [Reusable Workflows](#reusable-workflows)
+	- [Conditional Execution](#conditional-execution)
+	- [Caching](#caching)
+	- [Artifacts](#artifacts)
+
 
 ## Terminologies
 
