@@ -1,6 +1,6 @@
 # GitHub Actions
 
-The built-in CI/CD and automation tool for [GitHub](./version-control#github.md) repositories. They are configured using YAML files stored as `.github/workflows/<name>.yml`. GitHub does provide pre-written workflows for use cases like CI, CD, automation, GitHub Pages, etc.
+The built-in CI/CD and automation tool for [GitHub](./version-control#github.md) repositories. They are configured using YAML files stored as `.github/workflows/<name>.yml`. GitHub does provide pre-written workflows for use cases like CI, CD, GitHub Pages etc.
 
 > [GitHub Actions Documentation](https://docs.github.com/en/actions)  
 > [GitHub Actions Marketplace](https://github.com/marketplace?type=actions)  
@@ -60,16 +60,15 @@ jobs:
 - [Events](#events)
 - [Permissions](#permissions)
 - [Expressions](#expressions)
-	- [Contexts and Context Variables](#contexts-and-context-variables)
-	- [Expression Functions](#expression-functions)
+  - [Contexts and Context Variables](#contexts-and-context-variables)
+  - [Expression Functions](#expression-functions)
 - [Secrets and Environments](#secrets-and-environments)
 - [Advanced Processes](#advanced-processes)
-	- [Matrix Strategy](#matrix-strategy)
-	- [Reusable Workflows](#reusable-workflows)
-	- [Conditional Execution](#conditional-execution)
-	- [Caching](#caching)
-	- [Artifacts](#artifacts)
-
+  - [Matrix Strategy](#matrix-strategy)
+  - [Reusable Workflows](#reusable-workflows)
+  - [Conditional Execution](#conditional-execution)
+  - [Caching](#caching)
+  - [Artifacts](#artifacts)
 
 ## Terminologies
 
