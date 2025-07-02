@@ -87,11 +87,14 @@ Port mapping, often called port forwarding, is the process of routing external n
       * This can often be configured graphically through VM management software.
       * **KVM (using `libvirt` and `iptables`):**
           * Using `iptables`:
+
             ```bash
             sudo iptables -t nat -A PREROUTING -p tcp --dport 2222 -j DNAT --to 192.168.122.100:22
             sudo iptables -A FORWARD -p tcp -d 192.168.122.100 --dport 22 -j ACCEPT
             ```
+
           * Or by editing the `libvirt` network XML configuration:
+
             ```xml
             <network>
               <name>default</name>
