@@ -1,10 +1,11 @@
-# Linux Cronjobs
+# Cronjobs
 
 `cron` is a time-based job scheduler in Unix-like systems (Linux, macOS). It runs **cronjobs** (commands or scripts scheduled to run at specific times or intervals automatically) and it runs as a **background daemon** called `crond`.
 
 It is for "simple" tasks. For advanced/complex tasks use "Shell Scripting".
 
 They are defined in `crontabs`.
+
 1. **System-wide crontabs**
     * `/etc/crontab` — traditional system cron table
     * `/etc/cron.d/` — directory for package/app-specific cron tables
@@ -18,9 +19,10 @@ crontab -r    # Remove your crontab
 ```
 
 ## Cron Syntax
+
 It is defined in a continuous line. Always starting off with the "schedule" which is defined by `* * * * *`.
 
-```
+```txt
 * * * * * command_to_run
 | | | | |
 | | | | +----- day of week (0 - 7) (Sunday = 0 or 7)
@@ -41,6 +43,7 @@ It is defined in a continuous line. Always starting off with the "schedule" whic
 There are also @ shortcuts: `@hourly`, `@daily`, `@weekly`, `@monthly`, `@yearly` and `@reboot`.
 
 ## Environment
+
 The default shell is `/bin/sh`. You can override:
 
   ```crontab
@@ -54,6 +57,7 @@ The default `PATH` is very minimal — use full paths or define your own:
   ```
 
 ## Output & logging
+
 By default, cron emails the output to the user (if `mail` is set up).
 
 ```bash
@@ -87,5 +91,3 @@ By default, cron emails the output to the user (if `mail` is set up).
   → Compresses all current `.log` files with `gzip`.
 * `>> /var/log/myapp/maintenance.log 2>&1`
   → Appends all output (and errors) to a `maintenance.log`.
-
-

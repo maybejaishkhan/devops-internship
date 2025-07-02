@@ -31,14 +31,14 @@ There are 2 groups of software engineers:
 
 ## DevOps Practices
 
-1. [Version Control](docs/version-control.md)
-2. [CI/CD Automation](docs/ci-cd.md)
-3. [Containerization](docs/containerization.md)
-    - [Container Orchestration](docs/containerization#container-orchestration.md)
+1. [Version Control](docs/version-control.md) with [Git](docs/tools/git.md)
+2. [CI/CD Automation](docs/ci-cd.md) with [GitHub Actions](docs/tools/github-actions.md), [GitLab CI](docs/tools/gitlab-ci.md) and [Jenkins](docs/tools/jenkins.md)
+3. [Containerization](docs/containerization.md) with [Docker](docs/tools/docker.md)
+    - [Container Orchestration](docs/containerization#container-orchestration.md) with [Kubernetes](docs/tools/kubernetes.md)
 4. [Infrastructure as Code](docs/infrastructure-as-code.md)
-    - [Infrastructure Provisioning](docs/infrastructure-as-code#infrastructure-provisioning.md)
-    - [Configuration Management](docs/infrastructure-as-code#configuration-management.md)
-5. [Cloud Computing](docs/cloud-computing.md)
+    - [Infrastructure Provisioning](docs/infrastructure-as-code#infrastructure-provisioning.md) with [Terraform](docs/tools/terraform.md)
+    - [Configuration Management](docs/infrastructure-as-code#configuration-management.md) with [Ansible](docs/tools/ansible.md)
+5. [Cloud Computing](docs/cloud-computing.md) with [AWS](docs/aws.md), [Google Cloud](docs/google-cloud.md) and [Microsoft Azure](docs/azure.md)
 6. [Monitoring and Logging (Observability)](docs/observability.md)
 7. [Site Reliability Engineering](docs/site-reliability-engineering.md)
 8. [DevSecOps](docs/devsecops.md)
@@ -48,6 +48,13 @@ There are 2 groups of software engineers:
 ## Other Essentials
 
 1. [Linux](docs/linux.md)
+   1. [Networking](docs/linux-networking.md)
+   2. [Text Processing](docs/linux-text-processing.md)
+   3. [System Management](docs/linux-system-management.md)
+   4. [Service Monitoring](docs/linux-service-monitoring.md)
+   5. [File Transfer](docs/linux-file-transfer.md)
 2. [Networking](docs/networking.md)
 3. [Web Development](docs/web-development.md)
 4. [Databases](docs/databases.md)
+5. **Misc**
+   1. [Cronjobs](docs/cronjobs.md)
