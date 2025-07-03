@@ -1,22 +1,23 @@
 # Git - Version Control System
+
 Basically the default VCS that is being used by 90% of the world. It is a terminal application that makes it possible to contribute and share code.
 
-1. [Setup](#setup)
-2. [Start a Git Repository](#start-a-git-repository)
-	1. [Folder Anatomy of .git](#folder-anatomy-of-git)
-3. [Project Areas](#project-areas)
-4. [Branches](#branches)
-	1. [Merging and Rebasing](#merging-and-rebasing)
-	2. [Merge Conflicts](#merge-conflicts)
-	3. [Stash and Worktree](#stash-and-worktree)
-5. [Inspection](#inspection)
-6. [Submodules](#submodules)
+- [Setup](#setup)
+- [Start a Git repository](#start-a-git-repository)
+	- [Folder Anatomy of `.git`](#folder-anatomy-of-git)
+- [Project Areas](#project-areas)
+- [Branches](#branches)
+	- [Merging and Rebasing](#merging-and-rebasing)
+	- [Merge Conflicts](#merge-conflicts)
+	- [Stash and Worktree](#stash-and-worktree)
+- [Inspection](#inspection)
+- [Submodules](#submodules)
 
 ---
-                                               
+
 ## Setup
 
-1. **Windows** --> Get the installer from [https://git-scm.com/downloads]. Don't install via package manager (winget/choco/scoop) as you'd have to manually configure it.    
+1. **Windows** --> Get the installer from [https://git-scm.com/downloads]. Don't install via package manager (winget/choco/scoop) as you'd have to manually configure it.
 2. **Linux** --> Use the package manager.
 	1. Ubuntu/Debian: `sudo apt install git`
 	2. Fedora/CentOS: `sudo dnf install git`
@@ -34,15 +35,22 @@ git config --global user.email "your@email.com"
 # Check Full Config
 git config --list
 ```
+
 ## Start a Git repository
+
 There are 2 ways of starting a Git project:
+
 1. *Local-first* --> **`git init`** creates a new **empty Git repository** in your current directory. This turns an ordinary folder into a **Git version-controlled project** (with a `.git` folder).
 2. *Remote-first* --> `git clone <url>` copies an existing remote repository locally and configures the remote origin as well.
 
 > We can also "undo" a Git project by doing `rm -rf .git` (Linux).
+
+There is also the concept of a **mirror clone** done by `git clone <repo> --mirror`. This clones it as a workarea-less which has all branches/commits (exact mirror of our remote repo). We can then go `git clone <path-to-mirrored-repo>` to get a proper repo.
+ 
 ### Folder Anatomy of `.git`
 
 In a Git repository, run `tree -a .git`  (or use `ls -a .git` if no tree). You’ll see:
+
 ```shell
 .git/
 ├── HEAD                # Points to current branch (`refs/heads/main`)
@@ -53,8 +61,11 @@ In a Git repository, run `tree -a .git`  (or use `ls -a .git` if no tree). You�
 ├── objects/            # All commits/trees/blobs stored here
 ├── refs/               # Contains refs: branches, tags
 ```
+
 ## Project Areas
+
 A Git project has **3 main areas** (plus 1 more when working with others). Understanding these helps you know where your files are at each step.
+
 1. **Working Directory (Working Tree)** --> This is your actual project folder on your computer. You create, edit, delete files here like normal. By default, Git does not track new files until you tell it to.
 2. **Staging Area (Index)** --> This is a holding area for changes you want to include in the next commit. It lets you build a perfect commit, exactly what you want to save.
 3. **Local Repository (History)** --> This is the hidden `.git` folder. When you make a commit, Git takes a snapshot of what's in the Staging Area and saves it forever. You can go back in time, see who changed what, undo mistakes (all locally).
@@ -77,6 +88,7 @@ A Git project has **3 main areas** (plus 1 more when working with others). Under
 - `git pull` is a combination of `git fetch` and `git merge`.
 
 ## Branches
+>
 > Branches let you work on multiple "versions" of your project at the same time. A branch is basically a lightweight movable pointer to a commit.
 
 1. See (Local): `git branch`
@@ -91,10 +103,13 @@ A Git project has **3 main areas** (plus 1 more when working with others). Under
 8. Rename: `git branch -m <old> <new>`
 
 ### Merging and Rebasing
+
 Suppose you have 2 branches: **main** and **feature**.
-* The **main** branch starts with commits `{A, B}`.
-* You create the **feature** branch at commit `B`.
-* You add two new commits on **feature**: `C` and `D`.
+
+- The **main** branch starts with commits `{A, B}`.
+- You create the **feature** branch at commit `B`.
+- You add two new commits on **feature**: `C` and `D`.
+
 ```
 main:    A — B  
 feature: A — B — C — D
@@ -115,14 +130,16 @@ Now the branches have diverged — they both share `{A,B}` but each has unique c
 
 1. **Merge Commit** --> On *main*, run: `git merge feature`
 	- Git creates a special **merge commit** which has two parents:
-		* the latest commit on **main** (`F`)
-		* the latest commit on **feature** (`D`).
+		- the latest commit on **main** (`F`)
+		- the latest commit on **feature** (`D`).
 	- Result:
+
   ```
   main:    A — B — E — F — M
                         /   
   feature: A — B — C — D
   ```
+
 2. **Rebase** --> On *feature*, run: `git rebase main`
 	- What Happens:
 		1. Git finds the **common ancestor** (`B`).
@@ -130,20 +147,24 @@ Now the branches have diverged — they both share `{A,B}` but each has unique c
 		3. It fast-forwards **feature** to match **main** (`E` and `F`).
 		4. It re-applies `C` and `D` *on top* of `F` as new commits (`C'`, `D'`).
 	- Result:
+
   ```
   main:    A — B — E — F
 
   feature: A — B — E — F — C' — D'
   ```
 
-We can see that **Merge Commits** keep the commit histories intact BUT are messy and **Rebasing** makes the commit history linear BUT it rewrites history and changes commit hashes (becomes a problem on shared branches). 
-* Use **merge** for teamwork.
-* Use **rebase** for cleaning up before merging or for local branches.
+We can see that **Merge Commits** keep the commit histories intact BUT are messy and **Rebasing** makes the commit history linear BUT it rewrites history and changes commit hashes (becomes a problem on shared branches).
+
+- Use **merge** for teamwork.
+- Use **rebase** for cleaning up before merging or for local branches.
 
 To get these changes onto the remote repository, `git push` wouldn't work as it doesn't overwrite branches. So, we use `git push --force-with-lease`.
+
 - NEVER use `git push --force` as it'd destroy changes made by others on the remote repo.
 
 ### Merge Conflicts
+
 There are merge conflicts when git can't automerge branches together. To fix that, do `git status` and go to each file individually to fix the conflicts. Git marks them with <<<<<<<<<===========>>>>>>>>>.
 
 Once done, do `git commit` (Merge) or `git rebase --continue` (Rebase) to carry on.
@@ -164,12 +185,14 @@ Git saves the difference between the *last commit* (`HEAD`) and your *working/st
 6. Delete all stashes: `git stash clear`
 
 Git numbers stashes like `stash@{0}`, `stash@{1}`... So, we can target specific stashes as well.
+
 - Delete specific stash: `git stash drop stash@{<number>}`
 - Create branch from stash: `git stash branch <branch> stash@{<number>}`.
 
-> Worktree lets you check out multiple branches at once in different folders — without messing up your main working directory.Useful when you want to test or fix things side-by-side. 
+> Worktree lets you check out multiple branches at once in different folders — without messing up your main working directory.Useful when you want to test or fix things side-by-side.
 
 Internally, Worktrees shares the same .git folder, saving disk space.
+
 1. See (All): `git worktree list`
 2. Create: `git worktree add <path> <branch>`
 3. Delete: `git worktree remove <path>`
@@ -177,22 +200,26 @@ Internally, Worktrees shares the same .git folder, saving disk space.
 5. Create branch from worktree: `git worktree add <path> -b <branch>`
 
 ## Inspection
+
 `git status` is the main command for inspection. It shows staged, untracked, modified etc.
+
 - `git diff` to see unstaged changes.
 - `git diff --staged` to see staged changes.
 
 To check the commit history we can do `git log`.
+
 - Add `--online` for one-liner overviews for each commit.
 - Add `--graph` to see ASCII commit history graph.
 - Add `--all` to see all branches.
 
 To see
+
 - What changes a commit did `git show <commit>`
 - What changes affected a file `git log <file>`
 - Who last modified each line of a file `git blame <file>`. Add `-L 10,20` to only blame lines 10-20.
 
 `git reflog` shows all the HEAD movements (commit/rebase/checkout).
 
-We can inspect "remotes" with their URLs by doing `git remote -v` (for detailed `git remote show <remote>`). 
+We can inspect "remotes" with their URLs by doing `git remote -v` (for detailed `git remote show <remote>`).
 
 ## Submodules
