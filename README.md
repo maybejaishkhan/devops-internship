@@ -31,15 +31,24 @@ There are 2 groups of software engineers:
 
 ## DevOps Practices
 
-1. [Version Control](docs/version-control.md) with [Git](docs/tools/git.md)
-2. [CI/CD Automation](docs/ci-cd.md) with [GitHub Actions](docs/tools/github-actions.md), [GitLab CI](docs/tools/gitlab-ci.md) and [Jenkins](docs/tools/jenkins.md)
+1. [Version Control](docs/version-control.md) with [Git](docs/git/git.md)
+   - [Git commands](docs/git/git-commands.md) and [Git workflows](docs/git/git-workflows.md)
+2. [CI/CD Automation](docs/ci-cd.md) with
+   1. [GitHub Actions](docs/tools/github-actions.md)
+   2. [GitLab CI](docs/tools/gitlab-ci.md)
+   3. [Jenkins](docs/tools/jenkins.md)
 3. [Containerization](docs/containerization.md) with [Docker](docs/tools/docker.md)
-    - [Container Orchestration](docs/containerization#container-orchestration.md) with [Kubernetes](docs/tools/kubernetes.md)
+   - [Container Orchestration](docs/containerization#container-orchestration.md) with [Kubernetes](docs/tools/kubernetes.md)
 4. [Infrastructure as Code](docs/infrastructure-as-code.md)
-    - [Infrastructure Provisioning](docs/infrastructure-as-code#infrastructure-provisioning.md) with [Terraform](docs/tools/terraform.md)
-    - [Configuration Management](docs/infrastructure-as-code#configuration-management.md) with [Ansible](docs/tools/ansible.md)
-5. [Cloud Computing](docs/cloud-computing.md) with [AWS](docs/aws.md), [Google Cloud](docs/google-cloud.md) and [Microsoft Azure](docs/azure.md)
-6. [Monitoring and Logging (Observability)](docs/observability.md)
+   - [Infrastructure Provisioning](docs/infrastructure-as-code#infrastructure-provisioning.md) with [Terraform](docs/tools/terraform.md)
+   - [Configuration Management](docs/infrastructure-as-code#configuration-management.md) with [Ansible](docs/tools/ansible.md)
+5. [Cloud Computing](docs/cloud-computing.md) with
+   1. [AWS](docs/aws.md)
+   2. [Google Cloud](docs/google-cloud.md)
+   3. [Microsoft Azure](docs/azure.md)
+6. [Observability](docs/observability.md)
+   1. [Grafana](docs/observability/grafana.md)
+   2. [Prometheus](docs/observability/prometheus.md)
 7. [Site Reliability Engineering](docs/site-reliability-engineering.md)
 8. [DevSecOps](docs/devsecops.md)
 9. [MLOps](docs/mlops.md)
