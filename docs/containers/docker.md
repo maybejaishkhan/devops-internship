@@ -324,31 +324,67 @@ docker build -t myapp .
 
 docker run -p 5000:5000 myapp
 
-### Docker Compose
 
-Define multi-container apps using YAML.
+## Basics
 
-Example docker-compose.yml:
+## Docker Images
 
-```yaml
-version: '3'
+## Docker Containers
+
+## Docker Compose
+
+Define multi-container apps using YML.
+
+- Start (All): `compose up`
+  - In background: `-d`
+- Stop + Remove: `compose down`
+- Logs (All): `compose logs`
+
+## Docker Volumes
+
+Volumes are the preferred mechanism for persisting data or bind mounting in Docker. They're stored outside the container filesystem, so data remains even if the container is deleted.
+
+They are managed via the `-v` flag (Docker) or `docker volume` command (Compose):
+
+- See (All): `ls`
+- See (Unused): `ls -f dangling=true`
+- Delete (Specific): `rm <volume>`
+- Delete (Deleted Containers): `prune`
+- Inspect: `inspect <volume>`
+
+> It is defined with host path on left and container path on right, separated via a colon.
+
+### Volume Types
+
+1. **Named Volume** - Defined like `volumes: app:` at the end and linked inside the app volume command like `app_data:/app` for persistent storage. This creates the "app_data" folder in current directory which is then used as a volume.
+2. **Bind Mounting** - Link local files/folders to the files/folders inside the docker container.
+3. **Anonymous Volumes** - They are not named and hence are given a generated name by Docker.
+
+```yml
 services:
-  web:
-    image: nginx
-    ports:
-      - "8080:80"
-  db:
-    image: mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: example
+  app:
+    volumes:
+      - app_data:/app # Linking the named volume
+      - ./app-config.yml:/etc/app/app-config.yml:ro # Bind Mounting
+      - /data/tmp # Anonymous Volume
+
+volumes:
+  app: # Defining the named volume
 ```
 
-Commands:
+The `:ro` at the end of the path is called an **Access Mode** which restricts the file to be "read-only" (default is `:rw` "read-write").
 
-docker compose up         # Start all
-docker compose up -d      # Start in background
-docker compose down       # Stop and remove
-docker compose logs       # View logs
+## Docker Networks
 
+By default, containers are isolated — Docker networks define how and with whom they can talk.
 
+**Network Types** - Defined with the `network-type:` command.
+
+- `bridge` *Default*
+- `host` Share host networking namespace.
+- `none` Container has no network access.
+- `overlay` For docker swarm or kubernetes.
+- `macvlan` *Legacy* Assigns a MAC address and acts like a physical device.
+
+### User Defined Bridge Networks
 

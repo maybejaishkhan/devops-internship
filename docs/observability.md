@@ -29,13 +29,13 @@ We have 3 types of telemetry data that we collect.
 
 ## Monitoring Types & Methods
 
-| Monitoring Type         | Focus / What it Does                                 | Key Metrics / Actions                              | Example Tools                                    |
-| :---------------------- | :--------------------------------------------------- | :------------------------------------------------- | :----------------------------------------------- |
-| **Infrastructure** | Health & performance of underlying hardware/VMs.     | Host health, Disk (I/O, space), Memory, CPU, Network utilization. | `node_exporter`, Telegraf, Datadog Agent, SNMP  |
-| **Application (APM)**| Performance of software applications.                | Code-level performance, Errors, Bottlenecks, Transaction tracing, Throughput, Latency. | New Relic, Datadog APM, AppDynamics, Jaeger, Zipkin |
-| **Network** | Health & availability of network infrastructure.     | Latency, Packet loss, Connection status, Bandwidth utilization, Traffic flow. | Wireshark, Netdata, Icinga, PRTG, Zabbix         |
-| **Synthetic** | Proactive simulation of user interactions from external points. | Simulate user journeys, Availability checks (ping, curl), API monitoring. | Ping, cURL, Selenium, UptimeRobot                |
-| **Real User (RUM)** | Performance data from actual user sessions (frontend). | Page load time, Rendering time, UX metrics, Client-side errors, Geographical performance. | Datadog RUM, New Relic RUM, SpeedCurve, Google Analytics |
+| Monitoring Type         | Focus                              | Key Metrics                             |
+| :---------------------- | :--------------------------------------------------- | :------------------------------------------------- |
+| **Infrastructure** | Health & performance of underlying hardware/VMs.     | Host health, Disk (I/O, space), Memory, CPU, Network utilization. |
+| **Application (APM)**| Performance of software applications.                | Code-level performance, Errors, Bottlenecks, Transaction tracing, Throughput, Latency. |
+| **Network** | Health & availability of network infrastructure.     | Latency, Packet loss, Connection status, Bandwidth utilization, Traffic flow. |
+| **Synthetic** | Proactive simulation of user interactions from external points. | Simulate user journeys, Availability checks (ping, curl), API monitoring. |
+| **Real User (RUM)** | Performance data from actual user sessions (frontend). | Page load time, Rendering time, UX metrics, Client-side errors, Geographical performance. |
 
 > We can do monitring with or without an Agent (software installed directly on monitored device).
 >
@@ -53,7 +53,7 @@ We have 3 types of telemetry data that we collect.
    3. [Tempo](/docs/observability/tempo.md) for Traces
    4. [Prometheus](/docs/observability/prometheus.md) for Metrics
       1. [Mimir](/docs/observability/mimir.md) as Long-term storage
-      2. [Alertmanager]() for Alerts
+      2. [Alertmanager] for Alerts
 2. **ELK Stack**
    1. Elasticsearch for Indexing/Search
    2. Logstash for Data Pipeline
@@ -80,14 +80,14 @@ We have 3 types of telemetry data that we collect.
       2. Cloud Trace / Logging / Monitoring
 5. **Others**
    1. [OpenTelemetry](/docs/observability/opentelemetry.md) for Instrumentation and Collection standard
-   2. [Vector]() for Data Pipeline
-   3. [InfluxDB]() as Time-Series database
-   4. [ClickHouse]() as Columnar database for Analysis
+   2. [Vector] for Data Pipeline
+   3. [InfluxDB] as Time-Series database
+   4. [ClickHouse] as Columnar database for Analysis
 6. Self-Hosted
-   1. SigNoz – open source alternative to Datadog (built on ClickHouse + OpenTelemetry)
-   2. Zabbix – legacy infra monitoring
-   3. Netdata – real-time system health monitoring
-   4. VictoriaMetrics – fast, efficient alternative to Prometheus for metrics
+   1. SigNoz (open source alternative to Datadog)
+   2. Zabbix for legacy infra monitoring
+   3. Netdata for system health monitoring
+   4. VictoriaMetrics + VictoriaLogs (alternatives to Prometheus and Loki)
 
 ## Advanced Concepts
 
