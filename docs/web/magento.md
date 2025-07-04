@@ -4,6 +4,12 @@ It is an open-source CMS by Adobe. Its on [version 2](https://github.com/magento
 
 ## Installation on a Server
 
+There is a one-liner script that installs as docker containers.
+
+```bash
+curl -s https://raw.githubusercontent.com/markshust/docker-magento/master/lib/onelinesetup | bash -s -- magento.test community <version>
+```
+
 ### Magento 2.3.x on cPanel
 
 - **Download Magento 2 Archive** - Go to [Adobe Experience](https://experience.adobe.com/home), Create an Adobe account and Download the `.zip` version of **Magento Open Source** from the Tech Resources section.
