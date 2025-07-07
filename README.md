@@ -56,12 +56,14 @@ There are 2 groups of software engineers:
 
 ## Other Essentials
 
-1. [Linux](docs/linux.md)
-   1. [Networking](docs/linux-networking.md)
-   2. [Text Processing](docs/linux-text-processing.md)
-   3. [System Management](docs/linux-system-management.md)
-   4. [Service Monitoring](docs/linux-service-monitoring.md)
-   5. [File Transfer](docs/linux-file-transfer.md)
+1. [Operating Systems](docs/operating-systems.md)
+   1. [Linux](docs/operating-systems.md#linux)
+      1. [Networking](docs/linux/linux-networking.md)
+      2. [Text Processing](docs/linux-text-processing.md)
+      3. [System Management](docs/linux-system-management.md)
+      4. [Service Monitoring](docs/linux-service-monitoring.md)
+      5. [File Transfer](docs/linux-file-transfer.md)
+   2. [Windows](docs/operating-systems.md#windows)
 2. [Networking](docs/networking.md)
 3. [Web Development](docs/web-development.md)
 4. [Databases](docs/databases.md)

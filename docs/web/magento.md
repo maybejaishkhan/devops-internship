@@ -4,11 +4,19 @@ It is an open-source CMS by Adobe. Its on [version 2](https://github.com/magento
 
 ## Installation on a Server
 
-There is a one-liner script that installs as docker containers.
+There is a one-liner script that installs as docker containers. Before which first go to [Magento Marketplace](https://marketplace.magento.com/customer/accessKeys/).
+
+- Click Create A New Access Key
+- You’ll get:
+    - Public Key (used as username)
+    - Private Key (used as password)
+- Then run this in an empty folder.
 
 ```bash
 curl -s https://raw.githubusercontent.com/markshust/docker-magento/master/lib/onelinesetup | bash -s -- magento.test community <version>
 ```
+
+- Paste the publickey in username and privatekey in password.
 
 ### Magento 2.3.x on cPanel
 

@@ -165,7 +165,7 @@ An open-source automation server written in Java used to automate parts of the s
 * **Courses**: Udemy, Coursera, LinkedIn Learning
 * **Community**: Jenkins mailing list, Stack Overflow, GitHub
 
-```Jenkinsfile
+```groovy
 pipeline {
   agent any  // Runs on any available agent
 
