@@ -1,4 +1,4 @@
-# Linux Access and Security
+# Access and Security in Linux
 
 - **Users** Each user has a unique **UID** (User ID).
   - **Root** (UID 0): full system access.

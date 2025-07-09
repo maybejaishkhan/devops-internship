@@ -4,12 +4,12 @@ Basically the default VCS that is being used by 90% of the world. It is a termin
 
 - [Setup](#setup)
 - [Start a Git repository](#start-a-git-repository)
-	- [Folder Anatomy of `.git`](#folder-anatomy-of-git)
+  - [Folder Anatomy of `.git`](#folder-anatomy-of-git)
 - [Project Areas](#project-areas)
 - [Branches](#branches)
-	- [Merging and Rebasing](#merging-and-rebasing)
-	- [Merge Conflicts](#merge-conflicts)
-	- [Stash and Worktree](#stash-and-worktree)
+  - [Merging and Rebasing](#merging-and-rebasing)
+  - [Merge Conflicts](#merge-conflicts)
+  - [Stash and Worktree](#stash-and-worktree)
 - [Inspection](#inspection)
 - [Submodules](#submodules)
 
@@ -19,9 +19,9 @@ Basically the default VCS that is being used by 90% of the world. It is a termin
 
 1. **Windows** --> Get the installer from [https://git-scm.com/downloads]. Don't install via package manager (winget/choco/scoop) as you'd have to manually configure it.
 2. **Linux** --> Use the package manager.
-	1. Ubuntu/Debian: `sudo apt install git`
-	2. Fedora/CentOS: `sudo dnf install git`
-	3. Arch: `sudo pacman -S git`
+    1. Ubuntu/Debian: `sudo apt install git`
+    2. Fedora/CentOS: `sudo dnf install git`
+    3. Arch: `sudo pacman -S git`
 3. **MacOS** --> Use homebrew `brew install git`
 
 ```shell
@@ -81,9 +81,9 @@ A Git project has **3 main areas** (plus 1 more when working with others). Under
 - `git restore --staged` is a much safer alternative to `git reset`.
 - `git revert` makes a new commit that undoes whatever the last commit did.
 - `git reset` takes the HEAD and moves it back to change commit history. The 3 parameters decide what happens to the changes:
-	- `--mixed` (unstaged).
-	- `--soft` (staged).
-	- `--hard` (erased).
+    - `--mixed` (unstaged).
+    - `--soft` (staged).
+    - `--hard` (erased).
 - `git commit --amend` is for changing the last commit.
 - `git pull` is a combination of `git fetch` and `git merge`.
 
@@ -92,8 +92,8 @@ A Git project has **3 main areas** (plus 1 more when working with others). Under
 > Branches let you work on multiple "versions" of your project at the same time. A branch is basically a lightweight movable pointer to a commit.
 
 1. See (Local): `git branch`
-	- Add `-r`, `-a` or `-v` to see Remote, All or Latest Commit branches.
-	- Add `--merged` or `--no-merged` to see Merged or Unmerged branches.
+    - Add `-r`, `-a` or `-v` to see Remote, All or Latest Commit branches.
+    - Add `--merged` or `--no-merged` to see Merged or Unmerged branches.
 2. Create: `git branch <name>`
 3. Switch: `git switch <name>` or `git checkout <name>`
 4. Create & Switch: --> `git switch -c <name>` or `git checkout -b <name>`
@@ -129,10 +129,10 @@ feature: A — B — C — D
 Now the branches have diverged — they both share `{A,B}` but each has unique commits after that. There are now 2 ways of combining:
 
 1. **Merge Commit** --> On *main*, run: `git merge feature`
-	- Git creates a special **merge commit** which has two parents:
-		- the latest commit on **main** (`F`)
-		- the latest commit on **feature** (`D`).
-	- Result:
+    - Git creates a special **merge commit** which has two parents:
+        - the latest commit on **main** (`F`)
+        - the latest commit on **feature** (`D`).
+    - Result:
 
   ```
   main:    A — B — E — F — M
@@ -141,12 +141,12 @@ Now the branches have diverged — they both share `{A,B}` but each has unique c
   ```
 
 2. **Rebase** --> On *feature*, run: `git rebase main`
-	- What Happens:
-		1. Git finds the **common ancestor** (`B`).
-		2. It temporarily removes **feature**’s unique commits (`C` and `D`).
-		3. It fast-forwards **feature** to match **main** (`E` and `F`).
-		4. It re-applies `C` and `D` *on top* of `F` as new commits (`C'`, `D'`).
-	- Result:
+    - What Happens:
+        1. Git finds the **common ancestor** (`B`).
+        2. It temporarily removes **feature**’s unique commits (`C` and `D`).
+        3. It fast-forwards **feature** to match **main** (`E` and `F`).
+        4. It re-applies `C` and `D` *on top* of `F` as new commits (`C'`, `D'`).
+    - Result:
 
   ```
   main:    A — B — E — F
@@ -178,8 +178,8 @@ Git saves the difference between the *last commit* (`HEAD`) and your *working/st
 1. See (All): `git stash list`
 2. See (Latest): `git stash show`
 3. Save (Uncommitted Changes): `git stash`
-	- Add `-u` or `-a` to stash away Untracked or All changes.
-	- Add `-m <message>` to attach a message to the stash.
+    - Add `-u` or `-a` to stash away Untracked or All changes.
+    - Add `-m <message>` to attach a message to the stash.
 4. Apply last stash (Keep): `git stash apply`
 5. Apply last stash (Remove): `git stash pop`
 6. Delete all stashes: `git stash clear`
