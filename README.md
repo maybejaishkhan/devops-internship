@@ -1,6 +1,8 @@
 
 # DevOps
 
+<small>This repo contains things that I learned on my internship as well as other unrelated knowledge I have gathered.</small>
+
 > **DevOps Internship**  
 > Instructor: *Abdullah Kaleem*  
 > Organization: *Jumppace*  
